@@ -15,9 +15,6 @@ class TabPage extends StatelessWidget {
           child: SafeArea(
             child: TabBar(
               indicatorColor: Colors.transparent,
-              labelColor: Colors.red,
-              unselectedLabelColor: Colors.white54,
-              labelStyle: TextStyle(fontWeight: FontWeight.bold),
               tabs: [
                 Tab(
                   icon: Icon(Icons.show_chart),
