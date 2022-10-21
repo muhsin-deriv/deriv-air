@@ -12,6 +12,7 @@ class CustomTheme {
         unselectedLabelColor: Colors.white54,
         labelStyle: TextStyle(fontWeight: FontWeight.bold),
       ),
+      cardColor: Colors.white10,
     );
   }
 }
