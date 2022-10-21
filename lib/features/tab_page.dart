@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:price_tracker/features/trade/bloc/trade_bloc.dart';
 import 'package:price_tracker/features/transactions/presentation/transactions_page.dart';
 
 import 'trade/presentation/trade_page.dart';
@@ -30,7 +32,10 @@ class TabPage extends StatelessWidget {
         ),
         body: TabBarView(children: [
           // Trade Page
-          TradePage(),
+          BlocProvider(
+            create: (_) => TradeBloc(),
+            child: TradePage(),
+          ),
 
           // Transactions
           TransactionsPage(),
