@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:price_tracker/features/tick_component/tick_component.dart';
 
 import 'package:price_tracker/features/trade/presentation/components/trade_bottom_sheet.dart';
 import 'package:price_tracker/common/models/symbol_model.dart';
 
-class MarketSymbolRow extends StatelessWidget {
+class MarketSymbolRow extends StatefulWidget {
   final Symbol symbol;
 
   const MarketSymbolRow({
     Key? key,
     required this.symbol,
   }) : super(key: key);
+
+  @override
+  State<MarketSymbolRow> createState() => _MarketSymbolRowState();
+}
+
+class _MarketSymbolRowState extends State<MarketSymbolRow> {
+  bool canTrade = false;
+
+  void onTap(BuildContext context) {
+    if (!canTrade) {
+      Fluttertoast.showToast(
+        msg: "Market is currently unavailable",
+        gravity: ToastGravity.CENTER,
+        backgroundColor: Colors.white10,
+      );
+      return;
+    }
+
+    showTradeSheet(context);
+  }
 
   void showTradeSheet(BuildContext context) {
     showModalBottomSheet(
@@ -32,17 +53,22 @@ class MarketSymbolRow extends StatelessWidget {
     return ListTile(
       title: Row(
         children: [
-          Text(symbol.displayName),
+          Text(widget.symbol.displayName),
           Spacer(),
           TickComponent(
-            symbol: symbol.symbol,
-            key: Key(symbol.symbol),
+            symbol: widget.symbol.symbol,
+            key: Key(widget.symbol.symbol),
+            onTick: (_) {
+              setState(() {
+                canTrade = true;
+              });
+            },
           ),
-          SizedBox(width: 50),
+          SizedBox(width: 20),
         ],
       ),
       trailing: Icon(Icons.chevron_right),
-      onTap: () => showTradeSheet(context),
+      onTap: () => onTap(context),
     );
   }
 }

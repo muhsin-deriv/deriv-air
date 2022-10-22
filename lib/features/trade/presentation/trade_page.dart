@@ -50,6 +50,7 @@ class _TradePageState extends State<TradePage> {
               separatorBuilder: (_, __) => Divider(color: Colors.white24),
               itemCount: state.filteredSymbols.length,
               itemBuilder: (context, index) => MarketSymbolRow(
+                key: Key("${state.filteredSymbols[index].symbol}-row"),
                 symbol: state.filteredSymbols[index],
               ),
             ),

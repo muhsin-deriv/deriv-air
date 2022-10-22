@@ -8,11 +8,13 @@ import 'package:price_tracker/common/utils/ticker_mixin.dart';
 class TickComponent extends StatefulWidget {
   final String symbol;
   final bool showIcon;
+  final Function(Tick)? onTick;
 
   const TickComponent({
     Key? key,
     required this.symbol,
     this.showIcon = true,
+    this.onTick,
   }) : super(key: key);
 
   @override
@@ -35,6 +37,7 @@ class _TickComponentState extends State<TickComponent> with TickerMixin {
   @override
   void initState() {
     subscription = tickStream(widget.symbol).listen((Tick tick) {
+      widget.onTick?.call(tick);
       setState(() {
         lastTick = currentTick;
         currentTick = tick;
