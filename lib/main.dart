@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:price_tracker/features/auth/bloc/auth_bloc.dart';
 import 'package:price_tracker/theme.dart';
-import 'features/tab_page.dart';
+import 'features/auth/presentation/auth_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +16,10 @@ class MyApp extends StatelessWidget {
       title: 'Deriv Air',
       themeMode: ThemeMode.dark,
       darkTheme: CustomTheme.black,
-      home: TabPage(),
+      home: BlocProvider(
+        child: AuthPage(),
+        create: (_) => AuthBloc(),
+      ),
     );
   }
 }

@@ -9,3 +9,13 @@ class ApiDisconnectException implements Exception {
     this.stackTrace,
   }) : super();
 }
+
+class ApiError implements Exception {
+  final String message;
+  final String error;
+
+  ApiError({
+    required this.error,
+    required this.message,
+  }) : super();
+}
