@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:price_tracker/features/create_trade/bloc/create_trade_bloc.dart';
+import 'package:price_tracker/features/create_trade/presentation/create_trade_page.dart';
 import 'package:price_tracker/features/tick_component/tick_component.dart';
 
-import 'package:price_tracker/features/trade/presentation/components/trade_bottom_sheet.dart';
 import 'package:price_tracker/common/models/symbol_model.dart';
 
 class MarketSymbolRow extends StatefulWidget {
@@ -38,7 +40,10 @@ class _MarketSymbolRowState extends State<MarketSymbolRow> {
       context: context,
       builder: (BuildContext context) => GestureDetector(
         child: Container(
-          child: TradeBottomSheet(),
+          child: BlocProvider(
+            create: (_) => CreateTradeBloc(widget.symbol),
+            child: CreateTradePage(),
+          ),
           color: Colors.transparent,
         ),
         onTap: () {

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:price_tracker/common/models/symbol_model.dart';
-import 'package:price_tracker/common/repository/symbols_repo.dart';
+import 'package:price_tracker/common/repository/trade_repo.dart';
 
 import '../../../common/models/market_model.dart';
 
@@ -9,7 +9,7 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final SymbolsRepoBase symbolsRepo;
+  final TradeRepo symbolsRepo;
 
   HomeBloc(this.symbolsRepo) : super(LoadingHomeState()) {
     on<HomeEvent>((event, emit) async {

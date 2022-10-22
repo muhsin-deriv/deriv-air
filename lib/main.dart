@@ -19,6 +19,10 @@ class MyApp extends StatelessWidget {
         ?.pushNamedAndRemoveUntil('/', (route) => route.settings.name == '/');
   }
 
+  static void popCurrentPage() {
+    _navigatorKey.currentState?.maybePop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

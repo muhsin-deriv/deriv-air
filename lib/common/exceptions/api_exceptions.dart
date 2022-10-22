@@ -25,4 +25,7 @@ class ApiError implements Exception {
       error: map['code'] ?? '',
     );
   }
+
+  @override
+  String toString() => 'ApiError(message: $message, error: $error)';
 }
