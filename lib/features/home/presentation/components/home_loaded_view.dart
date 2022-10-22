@@ -54,7 +54,7 @@ class HomeLoadedView extends StatelessWidget {
         /// Component responsible for tick updates
         if (state.selectedSymbol != null)
           TickComponent(
-            symbol: state.selectedSymbol!,
+            symbol: state.selectedSymbol!.symbol,
             key: Key(state.selectedSymbol?.symbol ?? ''),
           ),
       ],

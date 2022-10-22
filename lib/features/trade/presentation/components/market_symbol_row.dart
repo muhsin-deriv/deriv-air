@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:price_tracker/features/tick_component/tick_component.dart';
 
 import 'package:price_tracker/features/trade/presentation/components/trade_bottom_sheet.dart';
 import 'package:price_tracker/common/models/symbol_model.dart';
@@ -33,7 +34,10 @@ class MarketSymbolRow extends StatelessWidget {
         children: [
           Text(symbol.displayName),
           Spacer(),
-          Text(symbol.symbol),
+          TickComponent(
+            symbol: symbol.symbol,
+            key: Key(symbol.symbol),
+          ),
           SizedBox(width: 50),
         ],
       ),

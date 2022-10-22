@@ -18,4 +18,11 @@ class ApiError implements Exception {
     required this.error,
     required this.message,
   }) : super();
+
+  factory ApiError.fromError(Map<String, dynamic> map) {
+    return ApiError(
+      message: map['message'] ?? '',
+      error: map['code'] ?? '',
+    );
+  }
 }

@@ -1,19 +1,18 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:price_tracker/common/exceptions/api_exceptions.dart';
-import 'package:price_tracker/common/models/symbol_model.dart';
 import 'package:price_tracker/common/models/tick_modal.dart';
 
 import 'package:price_tracker/common/utils/ticker_mixin.dart';
 
 class TickComponent extends StatefulWidget {
-  final Symbol symbol;
+  final String symbol;
+  final bool showIcon;
 
   const TickComponent({
     Key? key,
     required this.symbol,
+    this.showIcon = true,
   }) : super(key: key);
 
   @override
@@ -24,64 +23,46 @@ class _TickComponentState extends State<TickComponent> with TickerMixin {
   StreamSubscription? subscription;
   Tick? lastTick;
   Tick? currentTick;
-  String errorMessage = '';
+
+  Icon _getDirectionalIcon() {
+    if (lastTick?.quote == currentTick?.quote || lastTick == null)
+      return Icon(Icons.arrow_drop_down, color: Colors.transparent);
+    return (lastTick?.quote ?? 0) > (currentTick?.quote ?? 0)
+        ? Icon(Icons.arrow_drop_down, color: Colors.red)
+        : Icon(Icons.arrow_drop_up, color: Colors.green);
+  }
 
   @override
   void initState() {
-    subscription = tickStream(widget.symbol.symbol)?.listen((event) {
-      final parsedEvent = jsonDecode(event);
-      if (parsedEvent['msg_type'] != 'tick') return;
-
-      final tick = Tick.fromJson(parsedEvent['tick']);
+    subscription = tickStream(widget.symbol).listen((Tick tick) {
       setState(() {
         lastTick = currentTick;
         currentTick = tick;
-        errorMessage = '';
       });
-    }, onError: (error) {
-      if (error is ApiDisconnectException) {
-        setState(() {
-          errorMessage = error.message;
-        });
-      }
     });
-    subscribeToSymbol(widget.symbol.symbol);
+    subscribeToSymbol(widget.symbol);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
-        Container(
-          margin: EdgeInsets.only(top: 50),
-          padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-          child: Center(
-            child: Text(
-              currentTick?.quote.toString() ?? '--',
-              style: TextStyle(
-                color: getColor(),
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
-            ),
-          ),
+        Text(
+          currentTick?.quote.toStringAsFixed(2) ?? '--',
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .copyWith(color: getColor()),
         ),
-        if (errorMessage.isNotEmpty)
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-            child: Text(
-              errorMessage,
-              style: TextStyle(color: Colors.red),
-            ),
-          )
+        if (widget.showIcon) _getDirectionalIcon(),
       ],
     );
   }
 
   Color getColor() {
-    if (lastTick?.quote == currentTick?.quote) return Colors.grey;
+    if (lastTick?.quote == currentTick?.quote || lastTick == null)
+      return Colors.grey;
     return (lastTick?.quote ?? 0) > (currentTick?.quote ?? 0)
         ? Colors.red
         : Colors.green;
@@ -89,7 +70,7 @@ class _TickComponentState extends State<TickComponent> with TickerMixin {
 
   @override
   void dispose() {
-    unsubscribeToSymbol(widget.symbol.symbol);
+    unsubscribeToSymbol(widget.symbol);
     subscription?.cancel();
     super.dispose();
   }

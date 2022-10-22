@@ -12,12 +12,12 @@ mixin TickerMixin {
     return ApiConnection.instance.unsubscribeFromSymbol(symbol);
   }
 
-  Stream? tickStream(String symbol) =>
+  Stream<Tick> tickStream(String symbol) =>
       ApiConnection.instance.stream.where((event) {
         final parsedEvent = jsonDecode(event);
         if (parsedEvent['msg_type'] != 'tick') return false;
 
         final tick = Tick.fromJson(parsedEvent['tick']);
         return tick.symbol == symbol;
-      });
+      }).map((event) => Tick.fromJson(jsonDecode(event)['tick']));
 }

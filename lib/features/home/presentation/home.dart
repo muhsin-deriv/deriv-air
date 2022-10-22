@@ -5,6 +5,8 @@ import 'package:price_tracker/features/home/bloc/home_bloc.dart';
 import 'package:price_tracker/features/home/presentation/components/error_home_view.dart';
 import 'package:price_tracker/features/home/presentation/components/home_loaded_view.dart';
 
+import '../../../common/models/market_model.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 

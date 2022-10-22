@@ -63,13 +63,22 @@ class ApiConnection {
   }
 
   void onData(data) {
+    final parsedData = jsonDecode(data);
+
+    // Parse errors and send API Error Exceptions
+    if (parsedData['error'] != null) {
+      return _streamController.addError(
+        ApiError.fromError(parsedData['error']),
+      );
+    }
+
     _streamController.add(data);
 
     // If its a tick. Check if it should be added to [_symbolToIdMap]
-    final parsedData = jsonDecode(data);
     if (parsedData['msg_type'] != 'tick') {
       return;
     }
+
     final tick = Tick.fromJson(parsedData['tick']);
     if (!_symbolToIdMap.containsValue(tick.id)) {
       _symbolToIdMap[tick.symbol] = tick.id;
