@@ -4,6 +4,8 @@ import 'package:price_tracker/common/models/symbol_model.dart';
 import 'package:price_tracker/features/home/bloc/home_bloc.dart';
 import 'package:price_tracker/features/tick_component/tick_component.dart';
 
+import '../../../../common/models/market_model.dart';
+
 class HomeLoadedView extends StatelessWidget {
   final LoadedHomeState state;
   final Function(Market?) onMarketChanged;
@@ -27,7 +29,7 @@ class HomeLoadedView extends StatelessWidget {
           items: state.uniqueMarkets
               .map<DropdownMenuItem<Market>>((e) => DropdownMenuItem<Market>(
                     value: e,
-                    child: Text(state.getMarketDisplayName(e)),
+                    child: Text(e.toString()),
                   ))
               .toList(),
           value: state.selectedMarket,

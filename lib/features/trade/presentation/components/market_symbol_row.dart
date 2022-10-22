@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+
 import 'package:price_tracker/features/trade/presentation/components/trade_bottom_sheet.dart';
+import 'package:price_tracker/common/models/symbol_model.dart';
 
 class MarketSymbolRow extends StatelessWidget {
-  const MarketSymbolRow({Key? key}) : super(key: key);
+  final Symbol symbol;
+
+  const MarketSymbolRow({
+    Key? key,
+    required this.symbol,
+  }) : super(key: key);
 
   void showTradeSheet(BuildContext context) {
     showModalBottomSheet(
@@ -24,9 +31,9 @@ class MarketSymbolRow extends StatelessWidget {
     return ListTile(
       title: Row(
         children: [
-          Text('Symbol name'),
+          Text(symbol.displayName),
           Spacer(),
-          Text('Price'),
+          Text(symbol.symbol),
           SizedBox(width: 50),
         ],
       ),

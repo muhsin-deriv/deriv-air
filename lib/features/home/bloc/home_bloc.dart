@@ -3,6 +3,8 @@ import 'package:meta/meta.dart';
 import 'package:price_tracker/common/models/symbol_model.dart';
 import 'package:price_tracker/common/repository/symbols_repo.dart';
 
+import '../../../common/models/market_model.dart';
+
 part 'home_event.dart';
 part 'home_state.dart';
 

@@ -37,16 +37,6 @@ class LoadedHomeState extends HomeState {
   final List<Symbol> filteredSymbols;
   final Symbol? selectedSymbol;
 
-  String getMarketDisplayName(Market market) {
-    try {
-      return symbols
-          .firstWhere((element) => element.market == market)
-          .marketDisplayName;
-    } catch (e) {
-      return '--';
-    }
-  }
-
   List<Market> get uniqueMarkets =>
       symbols.fold([], (List<Market> combinedList, Symbol symbol) {
         if (!combinedList.contains(symbol.market)) {
