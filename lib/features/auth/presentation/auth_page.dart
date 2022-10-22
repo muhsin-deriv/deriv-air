@@ -4,7 +4,8 @@ import 'package:price_tracker/common/components/common_button.dart';
 import 'package:price_tracker/features/auth/bloc/auth_bloc.dart';
 
 class AuthPage extends StatelessWidget {
-  final TextEditingController tokenTextController = TextEditingController();
+  final TextEditingController tokenTextController =
+      TextEditingController(text: 'Z9V23cGIopkORLr');
 
   AuthPage({Key? key}) : super(key: key);
 

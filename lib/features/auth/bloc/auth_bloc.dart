@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:price_tracker/common/exceptions/api_exceptions.dart';
 import 'package:price_tracker/common/repository/auth_repo.dart';
+import 'package:price_tracker/main.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -15,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(state.copyWith(apiToken: event.token));
         try {
           await authRepo.checkAPIToken(event.token);
-          print("token valid");
+          MyApp.replaceToHome();
         } on ApiError catch (e) {
           emit(state.copyWith(errorMessage: e.message));
         }

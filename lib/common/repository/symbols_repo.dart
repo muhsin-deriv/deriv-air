@@ -21,17 +21,3 @@ class SymbolsRepo extends SymbolsRepoBase {
     return symbols;
   }
 }
-
-class MockSymbolsRepo implements SymbolsRepoBase {
-  @override
-  Future<Map> callAndWaitForData(String messageKey, String messageToBeSent) {
-    // TODO: implement callAndWaitForData
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<Symbol>> getSymbols() {
-    // TODO: implement getSymbols
-    throw UnimplementedError();
-  }
-}
