@@ -20,29 +20,36 @@ class TransactionsPage extends StatelessWidget {
                   : CircularProgressIndicator.adaptive());
         }
 
-        return CustomScrollView(
-          slivers: [
-            if (state.openPositions.isNotEmpty) ...[
-              TransactionTypeHeader(title: "Open Positions"),
+        return RefreshIndicator(
+          onRefresh: () {
+            BlocProvider.of<TransactionsBloc>(context)
+                .add(InitializeTransactions());
+            return Future.delayed(Duration(seconds: 1));
+          },
+          child: CustomScrollView(
+            slivers: [
+              if (state.openPositions.isNotEmpty) ...[
+                TransactionTypeHeader(title: "Open Positions"),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) => OpenTransactionCard(),
+                    childCount: 2,
+                  ),
+                ),
+              ],
+
+              // Closed
+              TransactionTypeHeader(title: "Closed Positions"),
               SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) => OpenTransactionCard(),
-                  childCount: 2,
+                  (BuildContext context, int index) => ClosedTransactionCard(
+                    transaction: state.closedPositions.elementAt(index),
+                  ),
+                  childCount: state.closedPositions.length,
                 ),
               ),
             ],
-
-            // Closed
-            TransactionTypeHeader(title: "Closed Positions"),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) => ClosedTransactionCard(
-                  transaction: state.closedPositions.elementAt(index),
-                ),
-                childCount: state.closedPositions.length,
-              ),
-            ),
-          ],
+          ),
         );
       },
     );
