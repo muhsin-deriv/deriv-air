@@ -12,13 +12,8 @@ class TradePage extends StatefulWidget {
   State<TradePage> createState() => _TradePageState();
 }
 
-class _TradePageState extends State<TradePage> {
-  @override
-  void didChangeDependencies() {
-    BlocProvider.of<TradeBloc>(context).add(InitializeTrade());
-    super.didChangeDependencies();
-  }
-
+class _TradePageState extends State<TradePage>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TradeBloc, TradeState>(
@@ -35,6 +30,9 @@ class _TradePageState extends State<TradePage> {
 
         return DefaultTabController(
           length: state.markets.length,
+          initialIndex: state.markets.indexWhere(
+            (element) => element == state.selectedMarket,
+          ),
           child: Scaffold(
             appBar: AppBar(
               title: TradeMarketsWidget(
@@ -59,4 +57,7 @@ class _TradePageState extends State<TradePage> {
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

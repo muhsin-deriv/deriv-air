@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:price_tracker/features/trade/bloc/trade_bloc.dart';
+import 'package:price_tracker/features/transactions/bloc/transactions_bloc.dart';
 import 'package:price_tracker/features/transactions/presentation/transactions_page.dart';
 
 import 'trade/presentation/trade_page.dart';
 
-class TabPage extends StatelessWidget {
+class TabPage extends StatefulWidget {
   const TabPage({Key? key}) : super(key: key);
+
+  @override
+  State<TabPage> createState() => _TabPageState();
+}
+
+class _TabPageState extends State<TabPage> {
+  @override
+  void didChangeDependencies() {
+    BlocProvider.of<TradeBloc>(context).add(InitializeTrade());
+    BlocProvider.of<TransactionsBloc>(context).add(InitializeTransactions());
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {

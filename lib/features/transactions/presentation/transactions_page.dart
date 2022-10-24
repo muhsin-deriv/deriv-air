@@ -6,19 +6,8 @@ import '../bloc/transactions_bloc.dart';
 import 'components/closed_transaction_card.dart';
 import 'components/open_transaction_card.dart';
 
-class TransactionsPage extends StatefulWidget {
+class TransactionsPage extends StatelessWidget {
   const TransactionsPage({Key? key}) : super(key: key);
-
-  @override
-  State<TransactionsPage> createState() => _TransactionsPageState();
-}
-
-class _TransactionsPageState extends State<TransactionsPage> {
-  @override
-  void didChangeDependencies() {
-    BlocProvider.of<TransactionsBloc>(context).add(InitializeTransactions());
-    super.didChangeDependencies();
-  }
 
   @override
   Widget build(BuildContext context) {
