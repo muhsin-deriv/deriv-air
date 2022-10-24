@@ -8,3 +8,5 @@ class TryLogin extends AuthEvent {
 
   TryLogin(this.token);
 }
+
+class TryLoginWithSavedToken extends AuthEvent {}
