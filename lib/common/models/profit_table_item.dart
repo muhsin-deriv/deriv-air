@@ -1,4 +1,4 @@
-import 'package:price_tracker/common/utils/enum_helpers.dart';
+import 'duration_type_enum.dart';
 
 class ProfitTableItem {
   ProfitTableItem({
@@ -16,7 +16,7 @@ class ProfitTableItem {
   });
 
   final int appId;
-  final int buyPrice;
+  final double buyPrice;
   final int contractId;
   final DurationType durationType;
   final String longCode;
@@ -30,7 +30,7 @@ class ProfitTableItem {
   factory ProfitTableItem.fromJson(Map<String, dynamic> json) =>
       ProfitTableItem(
         appId: json["app_id"],
-        buyPrice: json["buy_price"],
+        buyPrice: json["buy_price"].toDouble(),
         contractId: json["contract_id"],
         durationType: durationTypeValues.map[json["duration_type"]] ??
             DurationType.MINUTES,
@@ -57,10 +57,3 @@ class ProfitTableItem {
         "transaction_id": transactionId,
       };
 }
-
-enum DurationType { MINUTES, TICKS }
-
-final durationTypeValues = EnumValues({
-  "minutes": DurationType.MINUTES,
-  "ticks": DurationType.TICKS,
-});

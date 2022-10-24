@@ -32,10 +32,7 @@ class TabPage extends StatelessWidget {
         ),
         body: TabBarView(children: [
           // Trade Page
-          BlocProvider(
-            create: (_) => TradeBloc(),
-            child: TradePage(),
-          ),
+          TradePage(),
 
           // Transactions
           TransactionsPage(),
