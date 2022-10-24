@@ -16,7 +16,7 @@ class Portfolio {
   });
 
   final int appId;
-  final int buyPrice;
+  final double buyPrice;
   final int contractId;
   final String contractType;
   final String currency;
@@ -31,7 +31,7 @@ class Portfolio {
 
   factory Portfolio.fromJson(Map<String, dynamic> json) => Portfolio(
         appId: json["app_id"],
-        buyPrice: json["buy_price"],
+        buyPrice: (json["buy_price"] ?? 0).toDouble(),
         contractId: json["contract_id"],
         contractType: json["contract_type"],
         currency: json["currency"],

@@ -10,3 +10,9 @@ class NewTransaction extends TransactionsEvent {
 
   NewTransaction(this.transaction);
 }
+
+class NewContract extends TransactionsEvent {
+  final OpenContract contract;
+
+  NewContract(this.contract);
+}

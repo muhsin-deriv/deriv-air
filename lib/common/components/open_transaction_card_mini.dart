@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:price_tracker/common/components/pnl_component.dart';
 import 'package:price_tracker/common/components/trade_duration_type.dart';
+import 'package:price_tracker/common/models/open_contract_model.dart';
 
 class OpenTransactionCardMini extends StatelessWidget {
-  const OpenTransactionCardMini({Key? key}) : super(key: key);
+  final OpenContract contract;
+
+  const OpenTransactionCardMini({
+    Key? key,
+    required this.contract,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +23,11 @@ class OpenTransactionCardMini extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Buy \$10.00",
+              "Buy \$${contract.buyPrice.toStringAsFixed(2)}",
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            TradeDurationTypePill(title: "Minutes"),
-            PnLComponent(profit: 123.99),
+            TradeDurationTypePill(title: contract.contractType),
+            PnLComponent(profit: contract.profit),
           ],
         ),
       ),

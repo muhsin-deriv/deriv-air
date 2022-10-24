@@ -32,7 +32,18 @@ class TransactionsPage extends StatelessWidget {
                 TransactionTypeHeader(title: "Open Positions"),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) => OpenTransactionCard(),
+                    (BuildContext context, int index) {
+                      final contract = state.openContracts[
+                          state.openContractIds.elementAt(index)];
+                      if (contract == null) {
+                        return SizedBox.shrink();
+                      }
+
+                      return OpenTransactionCard(
+                        openContract: contract,
+                        key: Key(contract.contractId.toString()),
+                      );
+                    },
                     childCount: state.openContractIds.length,
                   ),
                 ),

@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:price_tracker/common/models/open_contract_model.dart';
 import 'package:price_tracker/common/models/portfolio_model.dart';
 import 'package:price_tracker/common/models/profit_table_item.dart';
-import 'package:price_tracker/common/models/trnsaction_model.dart';
+import 'package:price_tracker/common/models/transaction_model.dart';
 import 'package:price_tracker/common/repository/base_repo.dart';
 
 import 'api_connection.dart';
@@ -35,6 +36,26 @@ class TransactionsRepo extends BaseRepo {
         }
       }).map(
         (event) => Transaction.fromJson(jsonDecode(event)['transaction']),
+      );
+
+  Stream<OpenContract> contractsStream() =>
+      ApiConnection.instance.stream.where((event) {
+        final parsedEvent = jsonDecode(event);
+        if (parsedEvent['msg_type'] != 'proposal_open_contract' ||
+            parsedEvent['proposal_open_contract']['account_id'] == null) {
+          return false;
+        }
+
+        try {
+          OpenContract.fromJson(parsedEvent['proposal_open_contract']);
+          return true;
+        } catch (_) {
+          print(_);
+          return false;
+        }
+      }).map(
+        (event) =>
+            OpenContract.fromJson(jsonDecode(event)['proposal_open_contract']),
       );
 
   Future<List<Portfolio>> getOpenPortfolio() async {

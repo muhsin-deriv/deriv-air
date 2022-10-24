@@ -5,6 +5,7 @@ final initialTransactionsState = TransactionsState(
   closedPositions: [],
   hasError: false,
   openContractIds: [],
+  openContracts: {},
 );
 
 @immutable
@@ -15,6 +16,7 @@ class TransactionsState {
 
   final List<ProfitTableItem> closedPositions;
   final List<int> openContractIds;
+  final Map<int, OpenContract> openContracts;
 
   TransactionsState({
     required this.isLoading,
@@ -22,6 +24,7 @@ class TransactionsState {
     this.error,
     required this.closedPositions,
     required this.openContractIds,
+    required this.openContracts,
   });
 
   TransactionsState copyWith({
@@ -30,6 +33,7 @@ class TransactionsState {
     Object? error,
     List<ProfitTableItem>? closedPositions,
     List<int>? openContractIds,
+    Map<int, OpenContract>? openContracts,
   }) {
     return TransactionsState(
       isLoading: isLoading ?? this.isLoading,
@@ -37,6 +41,7 @@ class TransactionsState {
       error: error ?? this.error,
       closedPositions: closedPositions ?? this.closedPositions,
       openContractIds: openContractIds ?? this.openContractIds,
+      openContracts: openContracts ?? this.openContracts,
     );
   }
 }
