@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:price_tracker/common/components/pnl_component.dart';
 import 'package:price_tracker/common/models/duration_type_enum.dart';
 
 import 'package:price_tracker/common/models/profit_table_item.dart';
-import 'package:price_tracker/features/transactions/presentation/components/trade_duration_type.dart';
+import 'package:price_tracker/common/components/trade_duration_type.dart';
 import 'package:price_tracker/features/transactions/presentation/components/transaction_card_section.dart';
 
 class ClosedTransactionCard extends StatelessWidget {
@@ -96,28 +97,7 @@ class ClosedTransactionCard extends StatelessWidget {
                 TradeDurationTypePill(
                   title: transaction.durationType.toDisplayString(),
                 ),
-                Container(
-                  // color: Colors.red,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("P/L: ",
-                          style: Theme.of(context).textTheme.bodySmall),
-                      Text(
-                        profit.toStringAsFixed(2),
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: profit == 0
-                                      ? Colors.grey
-                                      : profit < 1
-                                          ? Colors.red
-                                          : Colors.green,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                      ),
-                    ],
-                  ),
-                )
+                PnLComponent(profit: profit),
               ],
             )
           ],

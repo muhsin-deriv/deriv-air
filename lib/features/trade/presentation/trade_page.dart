@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:price_tracker/features/trade/bloc/trade_bloc.dart';
 import 'package:price_tracker/features/trade/presentation/components/trade_markets_widget.dart';
 
+import '../../../common/components/open_transactions_section.dart';
 import 'components/market_symbol_row.dart';
 
 class TradePage extends StatefulWidget {
@@ -34,22 +35,30 @@ class _TradePageState extends State<TradePage>
             (element) => element == state.selectedMarket,
           ),
           child: Scaffold(
-            appBar: AppBar(
-              title: TradeMarketsWidget(
-                markets: state.markets,
-                onMarketSelected: (market) => {
-                  BlocProvider.of<TradeBloc>(context).add(
-                    OnMarketChosen(market),
+            body: SafeArea(
+              child: Column(
+                children: [
+                  OpenTransactionPreview(),
+                  TradeMarketsWidget(
+                    markets: state.markets,
+                    onMarketSelected: (market) => {
+                      BlocProvider.of<TradeBloc>(context).add(
+                        OnMarketChosen(market),
+                      ),
+                    },
                   ),
-                },
-              ),
-            ),
-            body: ListView.separated(
-              separatorBuilder: (_, __) => Divider(color: Colors.white24),
-              itemCount: state.filteredSymbols.length,
-              itemBuilder: (context, index) => MarketSymbolRow(
-                key: Key("${state.filteredSymbols[index].symbol}-row"),
-                symbol: state.filteredSymbols[index],
+                  Expanded(
+                    child: ListView.separated(
+                      separatorBuilder: (_, __) =>
+                          Divider(color: Colors.white24),
+                      itemCount: state.filteredSymbols.length,
+                      itemBuilder: (context, index) => MarketSymbolRow(
+                        key: Key("${state.filteredSymbols[index].symbol}-row"),
+                        symbol: state.filteredSymbols[index],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

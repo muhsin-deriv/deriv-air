@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:price_tracker/features/transactions/presentation/components/trade_duration_type.dart';
+import 'package:price_tracker/common/components/trade_duration_type.dart';
 
 class OpenTransactionCard extends StatelessWidget {
   const OpenTransactionCard({Key? key}) : super(key: key);
