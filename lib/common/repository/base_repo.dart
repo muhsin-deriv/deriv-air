@@ -28,4 +28,8 @@ abstract class BaseRepo {
 
     return decodedData;
   }
+
+  Future<void> forgetSubscription(String subscriptionId) async {
+    ApiConnection.instance.addMessage(jsonEncode({"forget": subscriptionId}));
+  }
 }

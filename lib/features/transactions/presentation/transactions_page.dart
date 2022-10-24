@@ -28,12 +28,12 @@ class TransactionsPage extends StatelessWidget {
           },
           child: CustomScrollView(
             slivers: [
-              if (state.openPositions.isNotEmpty) ...[
+              if (state.openContractIds.isNotEmpty) ...[
                 TransactionTypeHeader(title: "Open Positions"),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (BuildContext context, int index) => OpenTransactionCard(),
-                    childCount: 2,
+                    childCount: state.openContractIds.length,
                   ),
                 ),
               ],
